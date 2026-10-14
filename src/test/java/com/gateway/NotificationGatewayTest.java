@@ -28,7 +28,7 @@ class NotificationGatewayTest {
     @Test
     void testFallbackMechanism() {
         TelegramMessageSender telegram = new TelegramMessageSender();
-        telegram.setAvailable(false);
+        telegram.setAvailable(false); // Делаем Telegram недоступным
         SmsMessageSender sms = new SmsMessageSender();
 
         UrgentNotification notification = new UrgentNotification(telegram, sms);
@@ -75,6 +75,7 @@ class NotificationGatewayTest {
     void testNewPushNotificationSender() {
         PushNotificationSender push = new PushNotificationSender();
         Notification notification = new MarketingNotification(push);
+        assertDoesNotUrlThrow:
         assertDoesNotThrow(() -> notification.send("user", "Push promo"));
         assertEquals("PushNotification", push.getChannelName());
     }
